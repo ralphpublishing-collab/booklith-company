@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import Img from '../components/Img.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { founder, team } from '../data/site'
+---
+
+<Base
+  title="Our Team"
+  description="Meet the Booklith team: Rapheal Adebayo, Emmanuel Adebayo, Naomi Adebayo, Samuel Adebayo, and Serah Adebayo."
+>
+  <PageHero
+    eyebrow="Our Team"
+    title="Meet the Team <em>Behind Booklith.</em>"
+    intro="A small, focused team covering book marketing, creative direction, author outreach, and publishing support — led by our founder."
+    crumbs={[{ label: 'Our Team' }]}
+  />
+
+  <section class="section section--white">
+    <div class="wrap grid-2 grid-2--wide-right">
+      <figure class="reveal" style="margin:0">
+        <div class="frame frame--portrait frame--offset">
+          <Img src={founder.photo} alt={founder.alt} width={founder.w} height={founder.h} sizes="(min-width: 900px) 40vw, 100vw" style="object-position:center 20%" />
+        </div>
+      </figure>
+      <div>
+        <p class="eyebrow reveal">Leadership</p>
+        <h2 class="h1 reveal" data-delay="1">{founder.name}</h2>
+        <p class="team-feature__role reveal" data-delay="1">{founder.role}</p>
+        <p class="lead reveal" data-delay="2">{founder.summary}</p>
+        <p class="reveal" data-delay="3" style="margin-top:2rem">
+          <a class="text-link" href="/about">About Booklith <span class="arrow" aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow reveal">The specialists</p>
+        <h2 class="h2 reveal" data-delay="1">Each role, one part of your book’s presence.</h2>
+      </div>
+      <ul class="team-grid" role="list" style="list-style:none;margin:0;padding:0">
+        {team.map((m, i) => (
+          <li class="team-card reveal" data-delay={String(i)}>
+            <div class="frame">
+              <Img src={m.photo} alt={m.alt} width={m.w} height={m.h} sizes="(min-width: 1100px) 24vw, (min-width: 600px) 45vw, 100vw" widths={[400, 700, 1000]} />
+            </div>
+            <h3>{m.name}</h3>
+            <p class="role">{m.role}</p>
+            <p>{m.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Work with the Booklith team."
+    text="Tell us about your book and we’ll bring in the right people for what you need."
+    secondary={{ label: 'View Our Work', href: '/our-work' }}
+  />
+</Base>
+
+<style is:global>
+  .team-feature__role {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin: 0.9rem 0 1.75rem;
+  }
+</style>

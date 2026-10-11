@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import ProjectMedia from '../components/ProjectMedia.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { projects, categories } from '../data/site'
+
+const layouts = ['layout-a', 'layout-b', 'layout-c', 'layout-d', 'layout-e']
+const labelOf = (id: string) => categories.find((c) => c.id === id)?.label ?? id
+const countOf = (id: string) => (id === 'all' ? projects.length : projects.filter((p) => p.categories.includes(id)).length)
+---
+
+<Base
+  title="Our Work"
+  description="Explore Booklith’s portfolio: book cover artwork, campaign visuals, publishing materials, and author films from five client projects."
+>
+  <PageHero
+    eyebrow="Our Work"
+    title="Creative Work Built to Give Books <em>a Stronger Presence.</em>"
+    intro="Explore examples of the creative, marketing, branding, and promotional work Booklith can create for authors and their books."
+    crumbs={[{ label: 'Our Work' }]}
+  />
+
+  <section class="section section--white" style="padding-top:clamp(2.5rem,5vw,4rem)">
+    <div class="wrap">
+      <div class="filters" role="group" aria-label="Filter projects by category" data-filters>
+        {categories.map((c) => (
+          <button class="filter-btn" type="button" data-filter={c.id} aria-pressed={c.id === 'all' ? 'true' : 'false'}>
+            {c.label}<span class="count" aria-hidden="true">{countOf(c.id)}</span>
+          </button>
+        ))}
+      </div>
+      <p class="sr-only" aria-live="polite" data-filter-status></p>
+
+      <div data-projects>
+        {projects.map((p, i) => (
+          <article class="project" id={p.id} data-categories={p.categories.join(' ')} aria-labelledby={`${p.id}-title`}>
+            <header class="project-head">
+              <div>
+                <span class="project-num">Project {p.number}</span>
+                <h2 class="h2" id={`${p.id}-title`}>{p.title}</h2>
+                {p.author && <p class="project-author">by {p.author}</p>}
+              </div>
+              <div>
+                <p class="muted">{p.summary}</p>
+                <ul class="tags" aria-label="Categories">{p.categories.map((c) => <li>{labelOf(c)}</li>)}</ul>
+              </div>
+            </header>
+            <ProjectMedia project={p} layout={layouts[i]} zoom />
+          </article>
+        ))}
+      </div>
+      <p class="empty-state" hidden data-empty>No projects in this category yet.</p>
+    </div>
+  </section>
+
+  <dialog class="lightbox" aria-label="Enlarged image" data-lightbox>
+    <button class="lightbox-close" type="button" aria-label="Close enlarged image" data-lightbox-close>×</button>
+    <img alt="" data-lightbox-img />
+    <p class="lightbox-caption" data-lightbox-caption></p>
+  </dialog>
+
+  <CtaBand
+    title="Let’s create something for your book."
+    text="Tell us about your book and the kind of work you have in mind."
+    secondary={{ label: 'Explore Services', href: '/services' }}
+  />
+</Base>
+
+<script>
+  import { cdn } from '../data/site'
+
+  // ---- Filters ----
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'))
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-projects] .project'))
+  const status = document.querySelector<HTMLElement>('[data-filter-status]')
+  const empty = document.querySelector<HTMLElement>('[data-empty]')
+
+  function apply(filter: string, updateUrl = true) {
+    if (!buttons.some((b) => b.dataset.filter === filter)) filter = 'all'
+    let shown = 0
+    for (const item of items) {
+      const match = filter === 'all' || (item.dataset.categories ?? '').split(' ').includes(filter)
+      item.hidden = !match
+      if (!match) item.querySelectorAll('video').forEach((v) => v.pause())
+      if (match) shown++
+    }
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)))
+    if (empty) empty.hidden = shown > 0
+    const label = buttons.find((b) => b.dataset.filter === filter)?.firstChild?.textContent?.trim()
+    if (status) status.textContent = `Showing ${shown} ${shown === 1 ? 'project' : 'projects'}${filter === 'all' ? '' : ` in ${label}`}.`
+    if (updateUrl) {
+      const url = new URL(location.href)
+      if (filter === 'all') url.searchParams.delete('filter')
+      else url.searchParams.set('filter', filter)
+      url.hash = ''
+      history.replaceState(null, '', url)
+    }
+  }
+
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'all')))
+  const initial = new URLSearchParams(location.search).get('filter')
+  if (initial) apply(initial, false)
+
+  // ---- Lightbox ----
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]')
+  const lbImg = document.querySelector<HTMLImageElement>('[data-lightbox-img]')
+  const lbCap = document.querySelector<HTMLElement>('[data-lightbox-caption]')
+  let opener: HTMLElement | null = null
+
+  document.querySelectorAll<HTMLButtonElement>('[data-zoom]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!dialog || !lbImg || typeof dialog.showModal !== 'function') return
+      opener = btn
+      lbImg.src = cdn(btn.dataset.zoom!, 1800, 85)
+      lbImg.alt = btn.dataset.caption ?? ''
+      if (lbCap) lbCap.textContent = btn.dataset.caption ?? ''
+      dialog.showModal()
+    })
+  })
+  dialog?.querySelector('[data-lightbox-close]')?.addEventListener('click', () => dialog.close())
+  dialog?.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close()
+  })
+  dialog?.addEventListener('close', () => opener?.focus())
+</script>

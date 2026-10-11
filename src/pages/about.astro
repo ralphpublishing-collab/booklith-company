@@ -1,0 +1,198 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import Img from '../components/Img.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { services, team } from '../data/site'
+
+const principles = [
+  { t: 'Clarity before promotion', d: 'Good marketing starts with knowing exactly what a book offers and who it is for. We help authors get that clear first.' },
+  { t: 'Consistency builds recognition', d: 'Readers remember authors who look and sound the same wherever they meet them. We help keep every touchpoint aligned.' },
+  { t: 'Presentation is part of the work', d: 'How a book is introduced shapes how it is received. We treat presentation with the same care the author gave the writing.' },
+  { t: 'Honest, realistic support', d: 'We focus on what thoughtful work can do, and we are open about what no one can guarantee.' },
+]
+---
+
+<Base
+  title="About Booklith"
+  description="Booklith is a book marketing, author branding, and publishing support company helping authors present their books professionally and build recognizable author identities."
+>
+  <PageHero
+    eyebrow="About Booklith"
+    title="More Than Book Marketing. <em>A Team Behind the Author.</em>"
+    intro="Booklith exists to help authors present their books professionally, strengthen their author identities, and build recognizable visibility around their work."
+    crumbs={[{ label: 'About' }]}
+  />
+
+  <section class="section section--white">
+    <div class="wrap grid-2 grid-2--top">
+      <div>
+        <p class="eyebrow reveal">Our purpose</p>
+        <h2 class="h2 reveal" data-delay="1">Writing the book is one achievement. Building its presence is another.</h2>
+      </div>
+      <div class="reveal" data-delay="2">
+        <p class="lead" style="color:var(--ink)">
+          Many authors finish a book and then face a second, very different task: helping it find its readers. That task
+          calls for positioning, design, communication, and steady effort — skills that rarely sit with one person.
+        </p>
+        <p class="muted">
+          Booklith brings those skills together. We work alongside authors to clarify how their book should be presented,
+          shape a consistent author identity, create campaign materials, support practical publishing preparation, and
+          plan outreach to relevant audiences.
+        </p>
+        <p class="muted">
+          We are not a publishing house. We are the team authors bring in to help their work look, sound, and travel
+          like the professional project it is.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">One combined focus</p>
+          <h2 class="h2 reveal" data-delay="1">Five disciplines, working as one.</h2>
+        </div>
+        <p class="lead reveal" data-delay="2">Each area can stand on its own. Together, they give a book a coordinated presence.</p>
+      </div>
+      <ol class="numbered about-focus">
+        {services.map((s) => (
+          <li class="reveal">
+            <div class="about-focus__row">
+              <h3>{s.name}</h3>
+              <p>{s.short}</p>
+              <a class="text-link" href={s.href}>Explore <span class="sr-only">{s.name}</span><span class="arrow" aria-hidden="true">→</span></a>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p style="margin-top:2.5rem" class="reveal"><a class="btn btn--ghost" href="/services">View all services</a></p>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="wrap grid-2">
+      <figure class="reveal" style="margin:0">
+        <div class="frame frame--portrait frame--offset">
+          <Img
+            src="/img/team/rapheal-adebayo-about.jpg"
+            alt="Rapheal Adebayo, Founder & Director of Booklith, seated in a charcoal blazer and navy turtleneck in a bright studio"
+            width={1344}
+            height={1800}
+            sizes="(min-width: 900px) 45vw, 100vw"
+            style="object-position:center 25%"
+          />
+        </div>
+      </figure>
+      <div>
+        <p class="eyebrow reveal">Founder &amp; Director</p>
+        <h2 class="h2 reveal" data-delay="1">Rapheal Adebayo</h2>
+        <p class="lead reveal" data-delay="2" style="margin-top:1.5rem">
+          Rapheal leads Booklith’s direction and oversees how strategy, creative work, publishing support, and outreach
+          come together for each author the team works with.
+        </p>
+        <p class="muted reveal" data-delay="2">
+          The aim is simple: every author who works with Booklith should feel they have a dedicated team behind their
+          book — people who understand the work, communicate clearly, and care how it is presented.
+        </p>
+        <div class="btn-row reveal" data-delay="3">
+          <a class="btn" href="/our-team">Meet the Team</a>
+          <a class="btn btn--ghost" href="/contact">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap grid-2 grid-2--top">
+      <div>
+        <p class="eyebrow reveal">Our philosophy</p>
+        <h2 class="h2 reveal" data-delay="1">How we think about <em>an author’s presence.</em></h2>
+      </div>
+      <ol class="numbered">
+        {principles.map((p) => <li class="reveal"><div><h3>{p.t}</h3><p>{p.d}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">The team</p>
+          <h2 class="h2 reveal" data-delay="1">The people behind the work.</h2>
+        </div>
+        <div class="reveal" data-delay="2">
+          <p class="lead">Specialists in marketing, creative direction, outreach, and publishing support.</p>
+          <p style="margin-top:1.5rem"><a class="text-link" href="/our-team">Meet the full team <span class="arrow" aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+      <ul class="team-mini">
+        {team.map((m, i) => (
+          <li class="reveal" data-delay={String(i)}>
+            <div class="frame">
+              <Img src={m.photo} alt={m.alt} width={m.w} height={m.h} sizes="(min-width: 900px) 22vw, 50vw" widths={[400, 700]} />
+            </div>
+            <p class="team-mini__name">{m.name}</p>
+            <p class="team-mini__role">{m.role}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Let’s talk about your book."
+    text="Share where your book is today and where you would like it to go."
+    secondary={{ label: 'Explore Services', href: '/services' }}
+  />
+</Base>
+
+<style is:global>
+  .about-focus__row {
+    display: grid;
+    gap: 0.5rem 2rem;
+    align-items: baseline;
+  }
+  @media (min-width: 900px) {
+    .about-focus__row {
+      grid-template-columns: 1fr 1.6fr auto;
+    }
+  }
+  .team-mini {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem 1.25rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 900px) {
+    .team-mini {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .team-mini .frame {
+    aspect-ratio: 4 / 5;
+    margin-bottom: 1rem;
+  }
+  .team-mini .frame img {
+    object-position: center top;
+  }
+  .team-mini__name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .team-mini__role {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin-top: 0.35rem;
+  }
+</style>

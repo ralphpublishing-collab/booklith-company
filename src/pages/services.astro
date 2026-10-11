@@ -1,0 +1,127 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { services } from '../data/site'
+
+const notes: Record<string, string> = {
+  'publishing-support':
+    'Booklith is not a publisher. Publishing support covers preparation and presentation assistance within an agreed scope, rather than ISBN issuance, distribution, or publishing contracts.',
+  'author-outreach':
+    'Outreach support means planning and professional communication. Placements, media appearances, endorsements, and partnerships are never guaranteed.',
+}
+---
+
+<Base
+  title="Services"
+  description="Book marketing, author branding, creative campaigns, publishing support, and author outreach — creative and strategic support for authors from Booklith."
+>
+  <PageHero
+    eyebrow="Services"
+    title="Creative and Strategic Support <em>for Authors.</em>"
+    intro="Every book has a story. Booklith helps authors present that story with clarity, consistency, and a stronger professional presence."
+    crumbs={[{ label: 'Services' }]}
+  >
+    <nav class="svc-jump reveal" data-delay="3" aria-label="Jump to a service">
+      {services.map((s, i) => <a href={`#${s.slug}`}><span>{String(i + 1).padStart(2, '0')}</span>{s.name}</a>)}
+    </nav>
+  </PageHero>
+
+  {
+    services.map((s, i) => (
+      <section id={s.slug} class:list={['section', 'svc-block', i % 2 ? 'section--cream' : 'section--white']} aria-labelledby={`${s.slug}-title`}>
+        <div class="wrap svc-block__grid">
+          <div class="svc-block__head">
+            <span class="svc-block__num reveal" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h2 class="h2 reveal" data-delay="1" id={`${s.slug}-title`}>{s.name}</h2>
+          </div>
+          <div class="reveal" data-delay="2">
+            <p class="lead" style="color:var(--ink)">{s.overview}</p>
+            <h3 class="svc-block__sub">Support can include</h3>
+            <ul class="check-list">{s.includes.map((x) => <li>{x}</li>)}</ul>
+            {notes[s.slug] && <p class="note" style="margin-top:1.75rem">{notes[s.slug]}</p>}
+            <p style="margin-top:2rem">
+              <a class="btn" href={s.href}>{s.cta}</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="section section--dark section--tight">
+    <div class="wrap grid-2">
+      <h2 class="h3 reveal">Not sure which service fits? Most authors combine two or three.</h2>
+      <div class="reveal" data-delay="1">
+        <p class="muted">Tell us where your book is today. We can suggest a sensible starting point based on your goals.</p>
+        <div class="btn-row" style="margin-top:1.5rem">
+          <a class="btn btn--light" href="/for-authors">Guidance for Authors</a>
+          <a class="btn btn--ghost-light" href="/our-approach">Our Approach</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style is:global>
+  .svc-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2.75rem;
+  }
+  .svc-jump a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .svc-jump a span {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gold-text);
+  }
+  .svc-jump a:hover {
+    border-color: var(--ink);
+  }
+  .svc-block__grid {
+    display: grid;
+    gap: 2rem 5rem;
+  }
+  @media (min-width: 900px) {
+    .svc-block__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+    }
+    .svc-block__head {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+      align-self: start;
+    }
+  }
+  .svc-block__num {
+    display: block;
+    font-family: var(--serif);
+    font-size: clamp(4rem, 9vw, 7rem);
+    line-height: 0.9;
+    color: var(--gold);
+    opacity: 0.55;
+    margin-bottom: 1rem;
+  }
+  .svc-block__sub {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin: 2rem 0 0.5rem;
+  }
+</style>

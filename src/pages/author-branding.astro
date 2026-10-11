@@ -1,0 +1,54 @@
+---
+import ServicePage from '../components/ServicePage.astro'
+
+const touchpoints = [
+  { t: 'Author bio', d: 'Short and long versions that sound like you and stay consistent.' },
+  { t: 'Author photography direction', d: 'Guidance on portraits that suit your genre and tone.' },
+  { t: 'Social profiles', d: 'Profile images, banners, and descriptions that match.' },
+  { t: 'Website & book pages', d: 'Consistent wording and visuals wherever readers find you.' },
+  { t: 'Media & event materials', d: 'One-sheets and introductions for professional contexts.' },
+  { t: 'Book-related communications', d: 'Newsletters, announcements, and messages in a consistent voice.' },
+]
+---
+
+<ServicePage
+  slug="author-branding"
+  metaTitle="Author Branding"
+  title="Build an Author Identity <em>That Feels Like You.</em>"
+  description="Booklith helps authors build a consistent, professional author brand — positioning, visual identity, author profiles, and branded materials."
+  intro="Readers don’t only remember books — they remember authors. We help you develop a professional identity that feels true to you and stays consistent wherever readers meet your work."
+  pillarsHeading="An identity built with intention."
+  pillars={[
+    { t: 'Author positioning', d: 'Clarify what you write, who you write for, and what readers can expect from you — across this book and the next.' },
+    { t: 'Professional presentation', d: 'Make sure the way you appear in public matches the quality of the work you have written.' },
+    { t: 'Consistent visual identity', d: 'Colors, typography, imagery, and tone that make your materials recognizably yours.' },
+    { t: 'Author profiles', d: 'Bios, profile copy, and introductions written for different platforms and audiences.' },
+    { t: 'Branding materials', d: 'Practical assets — from social headers to one-sheets — that put your identity to work.' },
+    { t: 'Room to grow', d: 'A brand foundation flexible enough to carry future books, formats, and opportunities.' },
+  ]}
+  examplesHeading="Author identity in practice."
+  examples={[
+    { id: 'client-project-4', note: 'An author portrait and short film capturing the author at work — material that can be used consistently across profiles and announcements.' },
+    { id: 'client-project-5', note: 'A cohesive set of author imagery: a formal portrait, a reader-event photograph, and a short film among the bookshelves.' },
+  ]}
+>
+  <section class="section section--cream">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">Where your brand shows up</p>
+          <h2 class="h2 reveal" data-delay="1">One identity, every touchpoint.</h2>
+        </div>
+        <p class="lead reveal" data-delay="2">An author brand is only as strong as its least consistent place. These are the touchpoints we commonly help align.</p>
+      </div>
+      <ul class="check-list touch-grid">
+        {touchpoints.map((t) => <li class="reveal"><strong>{t.t}</strong> — <span class="muted">{t.d}</span></li>)}
+      </ul>
+    </div>
+  </section>
+  <style is:global>
+    @media (min-width: 800px) {
+      .touch-grid { grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+    }
+  </style>
+</ServicePage>

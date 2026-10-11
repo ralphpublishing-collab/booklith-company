@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import CtaBand from '../components/CtaBand.astro'
+
+const needs = [
+  { need: 'Marketing direction', q: 'You’re not sure how to describe your book, who it’s for, or where to focus your promotion.', href: '/author-marketing', service: 'Book Marketing' },
+  { need: 'Author branding', q: 'Your profiles and materials don’t yet feel consistent, professional, or recognizably yours.', href: '/author-branding', service: 'Author Branding' },
+  { need: 'Promotional campaigns', q: 'You need launch visuals, social creatives, or campaign graphics that do your cover justice.', href: '/creative-campaigns', service: 'Creative Campaigns' },
+  { need: 'Publishing support', q: 'You want practical help preparing and presenting your book, with a clear, agreed scope.', href: '/publishing-support', service: 'Publishing Support' },
+  { need: 'Author outreach', q: 'You’d like help introducing yourself and your work to relevant readers and communities.', href: '/author-outreach', service: 'Author Outreach' },
+]
+
+const steps = [
+  { t: 'Tell us about your book', d: 'Share your book, where it is today, and what kind of support you have in mind.' },
+  { t: 'We review your inquiry', d: 'The Booklith team looks at your goals and suggests an appropriate next step.' },
+  { t: 'Agree the scope together', d: 'You choose the services that fit, and we confirm what is included before work begins.' },
+]
+---
+
+<Base
+  title="For Authors"
+  description="Whether you need marketing direction, author branding, promotional campaigns, publishing support, or outreach, Booklith services can be selected to fit your book."
+>
+  <PageHero
+    eyebrow="For Authors"
+    title="You Wrote the Book. <em>Now Let’s Build Its Presence.</em>"
+    intro="Every author arrives at a different point. Some need a clear marketing direction; others need a polished identity, launch visuals, practical publishing help, or support reaching readers. You choose what fits."
+    crumbs={[{ label: 'For Authors' }]}
+  >
+    <div class="btn-row reveal" data-delay="3">
+      <a class="btn" href="/contact">Let’s Grow Your Book</a>
+      <a class="btn btn--ghost" href="#find-your-fit">Find your fit</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--white" id="find-your-fit">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">Find your fit</p>
+          <h2 class="h2 reveal" data-delay="1">Which of these sounds like you?</h2>
+        </div>
+        <p class="lead reveal" data-delay="2">Pick one area or combine several. Services can be selected according to what your book needs right now.</p>
+      </div>
+      <ul class="needs">
+        {needs.map((n, i) => (
+          <li class="reveal" data-delay={String(i % 3)}>
+            <a class="need" href={n.href}>
+              <span class="need__label">I need help with</span>
+              <h3 class="h3">{n.need}</h3>
+              <p>{n.q}</p>
+              <span class="text-link">Explore {n.service} <span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        ))}
+        <li class="reveal" data-delay="2">
+          <a class="need need--dark" href="/contact">
+            <span class="need__label">Not sure yet?</span>
+            <h3 class="h3">Start with a conversation</h3>
+            <p>Tell us about your book and we’ll help identify an appropriate starting point.</p>
+            <span class="text-link">Contact Booklith <span class="arrow" aria-hidden="true">→</span></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="wrap grid-2 grid-2--top">
+      <div>
+        <p class="eyebrow reveal">Getting started</p>
+        <h2 class="h2 reveal" data-delay="1">Three simple steps.</h2>
+        <p class="lead reveal" data-delay="2" style="margin-top:1.5rem">No long forms or commitments up front — just a clear conversation about your book.</p>
+      </div>
+      <ol class="numbered">
+        {steps.map((s) => <li class="reveal"><div><h3>{s.t}</h3><p>{s.d}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--white section--tight">
+    <div class="wrap wrap--narrow">
+      <p class="note reveal">
+        <strong>What to expect.</strong> Booklith focuses on how your book and author identity are presented and
+        promoted. We don’t guarantee sales, bestseller status, media coverage, or publication outcomes — but we do commit
+        to thoughtful, professional work and clear communication throughout.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand secondary={{ label: 'See Our Approach', href: '/our-approach' }} />
+</Base>
+
+<style is:global>
+  .needs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (min-width: 700px) {
+    .needs {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .needs {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .needs > li {
+    display: flex;
+  }
+  .need {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    width: 100%;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    background: var(--ivory);
+    text-decoration: none;
+    transition: background 0.3s var(--ease);
+  }
+  .need:hover {
+    background: var(--paper);
+  }
+  .need p {
+    color: var(--muted);
+    flex: 1;
+  }
+  .need .text-link {
+    align-self: flex-start;
+  }
+  .need__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+  }
+  .need--dark {
+    background: var(--ink);
+    color: var(--ivory);
+  }
+  .need--dark:hover {
+    background: var(--charcoal);
+  }
+  .need--dark p {
+    color: var(--muted-light);
+  }
+  .need--dark .need__label,
+  .need--dark .text-link:hover {
+    color: var(--gold-light);
+  }
+</style>

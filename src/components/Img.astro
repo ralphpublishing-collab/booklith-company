@@ -1,0 +1,43 @@
+---
+import { cdn } from '../data/site'
+
+interface Props {
+  src: string
+  alt: string
+  width: number
+  height: number
+  sizes?: string
+  widths?: number[]
+  eager?: boolean
+  class?: string
+  style?: string
+}
+const {
+  src,
+  alt,
+  width,
+  height,
+  sizes = '(min-width: 1000px) 50vw, 100vw',
+  widths = [480, 800, 1200, 1600],
+  eager = false,
+  class: className,
+  style,
+} = Astro.props
+const usable = widths.filter((w) => w <= width)
+if (!usable.length || usable[usable.length - 1] < width) usable.push(Math.min(width, 1800))
+const srcset = usable.map((w) => `${cdn(src, w)} ${w}w`).join(', ')
+---
+
+<img
+  src={cdn(src, Math.min(width, 1200))}
+  srcset={srcset}
+  sizes={sizes}
+  alt={alt}
+  width={width}
+  height={height}
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : undefined}
+  decoding="async"
+  class={className}
+  style={style}
+/>

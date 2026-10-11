@@ -1,0 +1,40 @@
+---
+import Img from './Img.astro'
+import VideoPlayer from './VideoPlayer.astro'
+import type { Project } from '../data/site'
+
+interface Props {
+  project: Project
+  layout: string
+  zoom?: boolean
+}
+const { project, layout, zoom = false } = Astro.props
+---
+
+<div class:list={['project-media', layout]}>
+  {
+    project.media.map((m) =>
+      m.type === 'image' ? (
+        <figure>
+          {zoom ? (
+            <button class="img-button" type="button" data-zoom={m.src} data-caption={m.alt} aria-label={`View larger: ${m.caption ?? m.alt}`}>
+              <div class="img-box" style={`aspect-ratio:${m.w}/${m.h}`}>
+                <Img src={m.src} alt={m.alt} width={m.w} height={m.h} sizes="(min-width: 1000px) 50vw, 100vw" />
+              </div>
+            </button>
+          ) : (
+            <div class="img-box" style={`aspect-ratio:${m.w}/${m.h}`}>
+              <Img src={m.src} alt={m.alt} width={m.w} height={m.h} sizes="(min-width: 1000px) 50vw, 100vw" />
+            </div>
+          )}
+          {m.caption && <figcaption>{m.caption}</figcaption>}
+        </figure>
+      ) : (
+        <figure class="is-video">
+          <VideoPlayer src={m.src} poster={m.poster} label={m.label} w={m.w} h={m.h} />
+          <figcaption>Author film</figcaption>
+        </figure>
+      ),
+    )
+  }
+</div>

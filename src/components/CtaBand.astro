@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string
+  text?: string
+  button?: string
+  href?: string
+  secondary?: { label: string; href: string }
+}
+const {
+  title = 'Your Next Chapter Starts With a Conversation.',
+  text = 'Tell us about your book and the support you are looking for.',
+  button = 'Let’s Grow Your Book',
+  href = '/contact',
+  secondary,
+} = Astro.props
+---
+
+<section class="section section--dark cta-band">
+  <div class="wrap">
+    <div class="cta-band__line" aria-hidden="true"></div>
+    <h2 class="h2 reveal">{title}</h2>
+    <p class="lead reveal" data-delay="1">{text}</p>
+    <div class="btn-row reveal" data-delay="2">
+      <a class="btn btn--light" href={href}>{button}</a>
+      {secondary && <a class="btn btn--ghost-light" href={secondary.href}>{secondary.label}</a>}
+    </div>
+  </div>
+</section>

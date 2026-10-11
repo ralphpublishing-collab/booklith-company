@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+---
+
+<Base title="Thank You" description="Your inquiry has been sent to Booklith." noindex>
+  <PageHero
+    eyebrow="Inquiry sent"
+    title="Thank you. <em>We’ve received your inquiry.</em>"
+    intro="The Booklith team will review your message and reply to the email address you provided."
+  >
+    <div class="btn-row">
+      <a class="btn" href="/">Back to Home</a>
+      <a class="btn btn--ghost" href="/our-work">View Our Work</a>
+    </div>
+  </PageHero>
+</Base>

@@ -1,0 +1,45 @@
+---
+import { cdn } from '../data/site'
+
+interface Props {
+  src: string
+  poster: string
+  label: string
+  w: number
+  h: number
+}
+const { src, poster, label, w, h } = Astro.props
+---
+
+<div class="video-wrap" data-video>
+  <video
+    controls
+    playsinline
+    preload="none"
+    poster={cdn(poster, 1280)}
+    width={w}
+    height={h}
+    aria-label={label}
+  >
+    <source src={src} type="video/mp4" />
+    <p>Your browser can’t play this video. <a href={src}>Download the video</a> instead.</p>
+  </video>
+  <div class="video-fallback" role="status">
+    <p>This video couldn’t be played here. <a href={src}>Open the video file</a>.</p>
+  </div>
+</div>
+
+<script>
+  // Show a visible fallback if the browser fails to load or decode a video
+  document.querySelectorAll<HTMLElement>('[data-video]').forEach((wrap) => {
+    const video = wrap.querySelector('video')
+    const source = wrap.querySelector('source')
+    const fail = () => wrap.classList.add('has-error')
+    video?.addEventListener('error', fail)
+    source?.addEventListener('error', fail)
+    // Pause any other playing video when one starts
+    video?.addEventListener('play', () => {
+      document.querySelectorAll('video').forEach((v) => v !== video && v.pause())
+    })
+  })
+</script>

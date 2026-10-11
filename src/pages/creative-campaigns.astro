@@ -1,0 +1,42 @@
+---
+import ServicePage from '../components/ServicePage.astro'
+---
+
+<ServicePage
+  slug="creative-campaigns"
+  metaTitle="Creative Campaigns"
+  title="Creative Campaigns That Bring <em>Your Book Into Focus.</em>"
+  description="Promotional graphics, book launch visuals, social media creatives, and campaign materials designed by Booklith to present your book professionally."
+  intro="Strong visuals help a book hold attention for long enough to be considered. We design campaign materials that carry your book’s look and message across every format you need."
+  pillarsHeading="Visuals made for your book, not a template."
+  pillars={[
+    { t: 'Promotional graphics', d: 'Key art, quote cards, and feature graphics that build on your cover and keep its identity intact.' },
+    { t: 'Book launch visuals', d: 'Announcement, countdown, and launch-day assets designed as a coordinated set.' },
+    { t: 'Social media creatives', d: 'Formats sized and composed for the platforms your readers actually use.' },
+    { t: 'Campaign materials', d: 'Banners, headers, and printable pieces for events, newsletters, and partners.' },
+    { t: 'Author films & imagery', d: 'Short video and photographic material that introduces you alongside your book.' },
+    { t: 'Consistent art direction', d: 'Every piece shares the same visual language, so the campaign is recognizable at a glance.' },
+  ]}
+  examplesHeading="Campaigns from our portfolio."
+  examples={[
+    { id: 'whispers-of-the-niger-dawn', note: 'A cover design extended into a styled promotional graphic around the line “Every family carries a story.”' },
+    { id: 'lions-of-the-great-rift', note: 'Square cover artwork and a wide campaign banner, built to work across social and web formats.' },
+  ]}
+>
+  <section class="section section--dark">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">Campaign moments</p>
+          <h2 class="h2 reveal" data-delay="1">Creative support <em>across the life of a book.</em></h2>
+        </div>
+        <p class="lead reveal" data-delay="2">The exact set of materials depends on your plans and the services you choose.</p>
+      </div>
+      <ol class="timeline">
+        <li class="reveal"><span class="phase">Before launch</span><h3 class="h4">Build anticipation</h3><p>Cover reveals, teaser graphics, and early announcements that introduce the book’s look and tone.</p></li>
+        <li class="reveal" data-delay="1"><span class="phase">Launch</span><h3 class="h4">Make the moment visible</h3><p>Launch-day visuals, banners, and social sets designed to work together across channels.</p></li>
+        <li class="reveal" data-delay="2"><span class="phase">After launch</span><h3 class="h4">Keep the book present</h3><p>Quote cards, event materials, and refreshed creatives that keep the campaign going.</p></li>
+      </ol>
+    </div>
+  </section>
+</ServicePage>

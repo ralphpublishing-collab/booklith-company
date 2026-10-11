@@ -1,0 +1,54 @@
+---
+import ServicePage from '../components/ServicePage.astro'
+---
+
+<ServicePage
+  slug="publishing-support"
+  metaTitle="Publishing Support"
+  title="Practical Support for <em>Your Publishing Journey.</em>"
+  description="Practical publishing preparation and presentation support from Booklith — editorial feedback coordination, author biographies, timelines, and presentation materials."
+  intro="Preparing a book for readers involves many details. We help authors organize and present that work professionally, with support shaped around your needs and an agreed scope."
+  pillarsHeading="Help with the details that shape a first impression."
+  pillars={[
+    { t: 'Preparation guidance', d: 'Help understanding what your manuscript and materials need before they go out into the world.' },
+    { t: 'Editorial feedback coordination', d: 'Organizing feedback and copyediting notes so revisions are clear and manageable.' },
+    { t: 'Author biography support', d: 'Writing and refining the author biography that accompanies your book.' },
+    { t: 'Presentation materials', d: 'Summaries, one-sheets, and supporting documents that present your book professionally.' },
+    { t: 'Timeline organization', d: 'A clear view of the steps ahead and the order they should happen in.' },
+    { t: 'Ongoing practical help', d: 'A point of contact for the questions that come up as your book moves forward.' },
+  ]}
+  examplesHeading="Publishing support in practice."
+  examples={[
+    { id: 'beyond-the-rainbow-bridge', note: 'A publishing preparation set including editorial feedback and copyediting notes, a timeline, and an author biography — alongside an author feature and short film.' },
+  ]}
+>
+  <section class="section section--cream">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow reveal">Clear scope</p>
+        <h2 class="h2 reveal" data-delay="1">What publishing support is — and isn’t.</h2>
+      </div>
+      <div class="split-panels">
+        <div class="panel reveal">
+          <h3 class="h4">What we help with</h3>
+          <ul class="check-list">
+            <li>Preparing and organizing your materials</li>
+            <li>Presentation of your book and author profile</li>
+            <li>Coordinating feedback and revisions</li>
+            <li>Planning the steps and timing ahead</li>
+          </ul>
+        </div>
+        <div class="panel panel--dark reveal" data-delay="1">
+          <h3 class="h4">What we don’t do</h3>
+          <ul class="check-list">
+            <li>Act as your publisher or offer publishing contracts</li>
+            <li>Issue ISBNs or manage distribution</li>
+            <li>Guarantee acceptance by publishers or retailers</li>
+            <li>Guarantee sales or publication outcomes</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note reveal" style="margin-top:2rem">Every publishing support engagement is defined in advance, so you know exactly what is included before work begins.</p>
+    </div>
+  </section>
+</ServicePage>

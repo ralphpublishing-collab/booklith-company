@@ -1,0 +1,53 @@
+---
+import ServicePage from '../components/ServicePage.astro'
+
+const questions = [
+  'What is this book really about, in one or two sentences?',
+  'Who is most likely to read it, and where do they spend their attention?',
+  'What makes it different from the books it will sit beside?',
+  'Which messages should every promotion repeat?',
+  'What activities make sense now, and which can wait?',
+  'How will we know the plan is on track?',
+]
+---
+
+<ServicePage
+  slug="book-marketing"
+  metaTitle="Book Marketing"
+  title="Give Your Book a Clearer <em>Marketing Direction.</em>"
+  description="Booklith helps authors clarify book positioning, promotional messaging, audience, and campaign planning for focused, coordinated book marketing."
+  intro="Good book marketing starts long before the first post or advert. We help you decide how your book should be positioned, what it should say, who it should reach, and which activities deserve your time."
+  pillarsHeading="Strategy that gives every effort a direction."
+  pillars={[
+    { t: 'Book positioning', d: 'Define where your book sits — its genre, its promise to readers, and what sets it apart — so every message starts from the same place.' },
+    { t: 'Promotional messaging', d: 'Shape the descriptions, hooks, and key lines that will be used across covers, posts, pitches, and listings.' },
+    { t: 'Audience consideration', d: 'Think carefully about who your readers are, what they care about, and how they tend to discover new books.' },
+    { t: 'Campaign planning', d: 'Turn the strategy into a practical plan: which activities, in what order, around which moments.' },
+    { t: 'Coordinated support', d: 'Connect marketing with branding, creative materials, and outreach, so the whole effort pulls in one direction.' },
+    { t: 'Realistic priorities', d: 'Focus your energy on the activities that fit your goals, budget, and time — rather than trying to do everything at once.' },
+  ]}
+  examplesHeading="Positioning made visible."
+  examples={[
+    { id: 'lions-of-the-great-rift', note: 'Cover artwork carried into a campaign banner, built around one clear promotional line: “Some battles are worth protecting.”' },
+  ]}
+>
+  <section class="section section--dark">
+    <div class="wrap grid-2 grid-2--top">
+      <div>
+        <p class="eyebrow reveal">Where we begin</p>
+        <h2 class="h2 reveal" data-delay="1">The questions behind <em>a clear plan.</em></h2>
+        <p class="lead reveal" data-delay="2" style="margin-top:1.5rem">
+          Before we recommend a single activity, we work through the questions that make marketing decisions easier.
+        </p>
+      </div>
+      <ol class="numbered">
+        {questions.map((q) => <li class="reveal"><p style="color:var(--ivory);font-size:1.1rem">{q}</p></li>)}
+      </ol>
+    </div>
+  </section>
+  <section class="section section--tight">
+    <div class="wrap wrap--narrow">
+      <p class="note reveal"><strong>A note on outcomes.</strong> Marketing improves how clearly and consistently a book is presented to its readers. It cannot guarantee sales figures, rankings, or bestseller status — and we will never promise that it does.</p>
+    </div>
+  </section>
+</ServicePage>

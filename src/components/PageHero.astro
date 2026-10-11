@@ -1,0 +1,31 @@
+---
+interface Props {
+  eyebrow: string
+  title: string
+  intro?: string
+  crumbs?: { label: string; href?: string }[]
+  dark?: boolean
+  mark?: string
+}
+const { eyebrow, title, intro, crumbs, dark = false, mark = 'B' } = Astro.props
+---
+
+<section class:list={['page-hero', { 'page-hero--dark section--dark': dark }]}>
+  <div class="wrap">
+    {
+      crumbs && (
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            {crumbs.map((c) => (c.href ? <li><a href={c.href}>{c.label}</a></li> : <li aria-current="page">{c.label}</li>))}
+          </ol>
+        </nav>
+      )
+    }
+    <p class="eyebrow reveal">{eyebrow}</p>
+    <h1 class="h1 reveal" data-delay="1" set:html={title} />
+    {intro && <p class="lead reveal" data-delay="2">{intro}</p>}
+    <slot />
+  </div>
+  <span class="page-hero__mark" aria-hidden="true">{mark}</span>
+</section>

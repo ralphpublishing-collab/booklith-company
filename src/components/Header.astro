@@ -1,0 +1,160 @@
+---
+import { mainNav, services, site } from '../data/site'
+
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/'
+const serviceHrefs = services.map((s) => s.href)
+const isCurrent = (href: string) => path === href
+const inServices = path === '/services' || serviceHrefs.includes(path)
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label="Booklith — home">
+      <img src={site.logo} alt="Booklith — Book Marketing, Author Branding, Publishing Support" width="138" height="46" />
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main">
+      <ul class="nav-list">
+        {
+          mainNav.map((item) =>
+            item.href === '/services' ? (
+              <li class="has-dropdown" data-dropdown>
+                <a class="nav-link" href="/services" aria-current={inServices ? 'page' : undefined}>
+                  Services
+                </a>
+                <button class="dropdown-toggle" type="button" aria-expanded="false" aria-controls="services-menu">
+                  <span class="sr-only">Show service pages</span>
+                  <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true">
+                    <path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" />
+                  </svg>
+                </button>
+                <ul class="dropdown" id="services-menu">
+                  {services.map((s) => (
+                    <li>
+                      <a href={s.href} aria-current={isCurrent(s.href) ? 'page' : undefined}>
+                        {s.name}
+                      </a>
+                    </li>
+                  ))}
+                  <li>
+                    <a class="dropdown-all" href="/services">
+                      All services
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <li>
+                <a class="nav-link" href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </nav>
+
+    <a class="btn header-cta" href="/contact">Let’s Grow Your Book</a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="label" data-menu-label>Menu</span>
+      <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="sr-only" data-menu-sr>Open menu</span>
+    </button>
+  </div>
+
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile" hidden data-mobile-menu>
+    <ul>
+      {
+        mainNav.map((item) => (
+          <li>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+              {item.label}
+            </a>
+            {item.href === '/services' && (
+              <ul class="mobile-sub" aria-label="Service pages">
+                {services.map((s) => (
+                  <li>
+                    <a href={s.href} aria-current={isCurrent(s.href) ? 'page' : undefined}>
+                      {s.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <a class="btn" href="/contact">Let’s Grow Your Book</a>
+    <p class="mobile-contact">
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]')
+  const label = document.querySelector<HTMLElement>('[data-menu-label]')
+  const sr = document.querySelector<HTMLElement>('[data-menu-sr]')
+
+  function setMenu(open: boolean, returnFocus = true) {
+    if (!toggle || !menu) return
+    toggle.setAttribute('aria-expanded', String(open))
+    menu.hidden = !open
+    document.body.classList.toggle('menu-open', open)
+    if (label) label.textContent = open ? 'Close' : 'Menu'
+    if (sr) sr.textContent = open ? 'Close menu' : 'Open menu'
+    if (open) menu.querySelector<HTMLAnchorElement>('a')?.focus()
+    else if (returnFocus) toggle.focus()
+  }
+
+  toggle?.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'))
+  menu?.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).closest('a')) setMenu(false, false)
+  })
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return
+    if (toggle?.getAttribute('aria-expanded') === 'true') setMenu(false)
+    closeDropdowns(true)
+  })
+  // Close the mobile menu if the viewport grows into the desktop layout
+  window.matchMedia('(min-width: 1280px)').addEventListener('change', (e) => {
+    if (e.matches && toggle?.getAttribute('aria-expanded') === 'true') setMenu(false, false)
+  })
+  // Restore state when returning via back/forward cache
+  window.addEventListener('pageshow', () => {
+    if (toggle?.getAttribute('aria-expanded') === 'true') setMenu(false, false)
+  })
+
+  // Services dropdown (desktop): hover via CSS, click/keyboard via this toggle
+  const dropdowns = document.querySelectorAll<HTMLElement>('[data-dropdown]')
+  function closeDropdowns(focusToggle = false) {
+    dropdowns.forEach((d) => {
+      const btn = d.querySelector<HTMLButtonElement>('.dropdown-toggle')
+      if (d.classList.contains('is-open')) {
+        d.classList.remove('is-open')
+        btn?.setAttribute('aria-expanded', 'false')
+        if (focusToggle && d.contains(document.activeElement)) btn?.focus()
+      }
+    })
+  }
+  dropdowns.forEach((d) => {
+    const btn = d.querySelector<HTMLButtonElement>('.dropdown-toggle')
+    btn?.addEventListener('click', () => {
+      const open = !d.classList.contains('is-open')
+      closeDropdowns()
+      d.classList.toggle('is-open', open)
+      btn.setAttribute('aria-expanded', String(open))
+      if (open) d.querySelector<HTMLAnchorElement>('.dropdown a')?.focus()
+    })
+    d.addEventListener('focusout', (e) => {
+      if (!d.contains(e.relatedTarget as Node)) closeDropdowns()
+    })
+  })
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('[data-dropdown]')) closeDropdowns()
+  })
+</script>

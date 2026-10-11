@@ -1,0 +1,269 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from './PageHero.astro'
+import CtaBand from './CtaBand.astro'
+import ProjectMedia from './ProjectMedia.astro'
+import { services, projectById } from '../data/site'
+
+interface Props {
+  slug: string
+  title: string
+  metaTitle: string
+  description: string
+  intro: string
+  pillars: { t: string; d: string }[]
+  pillarsHeading: string
+  examples?: { id: string; note: string }[]
+  examplesHeading?: string
+}
+const { slug, title, metaTitle, description, intro, pillars, pillarsHeading, examples = [], examplesHeading = 'Related work' } = Astro.props
+const service = services.find((s) => s.slug === slug)!
+const index = services.indexOf(service)
+const others = services.filter((s) => s.slug !== slug)
+const layoutFor: Record<string, string> = {
+  'lions-of-the-great-rift': 'layout-a',
+  'whispers-of-the-niger-dawn': 'layout-b',
+  'beyond-the-rainbow-bridge': 'layout-c',
+  'client-project-4': 'layout-d',
+  'client-project-5': 'layout-e',
+}
+---
+
+<Base title={metaTitle} description={description}>
+  <PageHero
+    eyebrow={service.name}
+    title={title}
+    intro={intro}
+    crumbs={[{ label: 'Services', href: '/services' }, { label: service.name }]}
+    mark={String(index + 1).padStart(2, '0')}
+  >
+    <div class="btn-row reveal" data-delay="3">
+      <a class="btn" href={`/contact?service=${slug}`}>Let’s Grow Your Book</a>
+      <a class="btn btn--ghost" href="#what-we-do">What this includes</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--white" id="what-we-do">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">What we do</p>
+          <h2 class="h2 reveal" data-delay="1">{pillarsHeading}</h2>
+        </div>
+      </div>
+      <div class="pillars">
+        {pillars.map((p, i) => (
+          <article class="pillar reveal" data-delay={String(i % 3)}>
+            <span class="pillar__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="h4">{p.t}</h3>
+            <p>{p.d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <slot />
+
+  {
+    examples.length > 0 && (
+      <section class="section section--white">
+        <div class="wrap">
+          <div class="section-head section-head--split">
+            <div>
+              <p class="eyebrow reveal">From our portfolio</p>
+              <h2 class="h2 reveal" data-delay="1">{examplesHeading}</h2>
+            </div>
+            <p class="reveal" data-delay="2">
+              <a class="text-link" href="/our-work">View all work <span class="arrow" aria-hidden="true">→</span></a>
+            </p>
+          </div>
+          {examples.map((ex) => {
+            const p = projectById(ex.id)
+            return (
+              <article class="svc-example reveal">
+                <div class="svc-example__head">
+                  <h3 class="h3"><a href={`/our-work#${p.id}`}>{p.title}</a></h3>
+                  {p.author && <p class="project-author">{p.author}</p>}
+                  <p class="muted" style="margin-top:0.9rem">{ex.note}</p>
+                </div>
+                <ProjectMedia project={p} layout={layoutFor[p.id]} />
+              </article>
+            )
+          })}
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section section--cream section--tight">
+    <div class="wrap">
+      <p class="eyebrow reveal">Other services</p>
+      <ul class="other-svcs">
+        {others.map((s) => (
+          <li class="reveal">
+            <a href={s.href}>
+              <span class="h4">{s.name}</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Let’s Grow Your Book."
+    text={`Tell us about your book and the ${service.name.toLowerCase()} support you’re looking for.`}
+    href={`/contact?service=${slug}`}
+  />
+</Base>
+
+<style is:global>
+  .pillars {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (min-width: 700px) {
+    .pillars {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .pillars {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .pillar {
+    background: var(--paper);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+  }
+  .pillar__n {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--gold-text);
+    margin-bottom: 1.5rem;
+  }
+  .pillar h3 {
+    margin-bottom: 0.75rem;
+  }
+  .pillar p {
+    color: var(--muted);
+    margin: 0;
+  }
+  .svc-example {
+    display: grid;
+    gap: 2rem 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .svc-example + .svc-example {
+    margin-top: 4rem;
+  }
+  @media (min-width: 1000px) {
+    .svc-example {
+      grid-template-columns: 0.7fr 1.3fr;
+    }
+  }
+  .svc-example h3 a {
+    text-decoration: none;
+  }
+  .svc-example h3 a:hover {
+    color: var(--gold-text);
+  }
+  .other-svcs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  @media (min-width: 700px) {
+    .other-svcs {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .other-svcs a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-height: 88px;
+    padding: 1.25rem 1.5rem;
+    background: var(--cream);
+    text-decoration: none;
+    transition: background 0.25s var(--ease);
+  }
+  .other-svcs a:hover {
+    background: var(--ivory);
+  }
+  .other-svcs .arrow {
+    font-family: var(--serif);
+    color: var(--gold-text);
+    font-size: 1.3rem;
+  }
+  .split-panels {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 800px) {
+    .split-panels {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .panel {
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .panel--dark {
+    background: var(--charcoal);
+    color: var(--ivory);
+    border-color: var(--charcoal);
+  }
+  .panel h3 {
+    margin-bottom: 1.25rem;
+  }
+  .panel--dark .check-list li {
+    border-color: var(--line-dark);
+  }
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    background: var(--line-dark);
+    border: 1px solid var(--line-dark);
+  }
+  @media (min-width: 800px) {
+    .timeline {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .timeline li {
+    background: var(--ink);
+    padding: 2rem;
+  }
+  .timeline .phase {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 1rem;
+  }
+  .timeline h3 {
+    margin-bottom: 0.75rem;
+  }
+  .timeline p {
+    color: var(--muted-light);
+    margin: 0;
+  }
+</style>

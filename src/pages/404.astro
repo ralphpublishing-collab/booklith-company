@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+---
+
+<Base title="Page Not Found" description="The page you were looking for could not be found." noindex>
+  <PageHero
+    eyebrow="404"
+    title="This page isn’t <em>in our library.</em>"
+    intro="The page you were looking for may have moved or no longer exists."
+    mark="?"
+  >
+    <div class="btn-row">
+      <a class="btn" href="/">Back to Home</a>
+      <a class="btn btn--ghost" href="/services">Explore Services</a>
+      <a class="btn btn--ghost" href="/contact">Contact Us</a>
+    </div>
+  </PageHero>
+</Base>

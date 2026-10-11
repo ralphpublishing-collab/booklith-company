@@ -1,0 +1,60 @@
+---
+import { services, site } from '../data/site'
+
+const company = [
+  { label: 'Home', href: '/' },
+  { label: 'About Booklith', href: '/about' },
+  { label: 'Our Work', href: '/our-work' },
+  { label: 'Our Team', href: '/our-team' },
+  { label: 'Our Approach', href: '/our-approach' },
+  { label: 'Testimonials', href: '/testimonials' },
+  { label: 'For Authors', href: '/for-authors' },
+  { label: 'Contact', href: '/contact' },
+]
+---
+
+<footer class="site-footer on-dark">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="logo-plate" href="/" aria-label="Booklith — home">
+          <img src={site.logo} alt="Booklith" width="220" height="73" loading="lazy" />
+        </a>
+        <p class="footer-descriptor">{site.descriptor}</p>
+        <p>
+          Booklith helps authors present their books professionally, strengthen their author identities, and build
+          recognizable visibility around their work.
+        </p>
+      </div>
+
+      <nav aria-labelledby="footer-company">
+        <h2 id="footer-company">Booklith</h2>
+        <ul>{company.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </nav>
+
+      <nav aria-labelledby="footer-services">
+        <h2 id="footer-services">Services</h2>
+        <ul>
+          <li><a href="/services">All Services</a></li>
+          {services.map((s) => <li><a href={s.href}>{s.name}</a></li>)}
+        </ul>
+      </nav>
+
+      <div>
+        <h2>Get in touch</h2>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          <li><a href={site.url}>{site.domain}</a></li>
+        </ul>
+        <p style="margin-top:1.5rem">
+          <a class="text-link" href="/contact">Let’s Grow Your Book <span class="arrow" aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Booklith. All rights reserved.</p>
+      <p>{site.descriptor}</p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,17 @@
+{
+  "name": "booklith",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@fontsource-variable/manrope": "^5.2.5",
+    "@fontsource/cormorant-garamond": "^5.2.6",
+    "astro": "^5.14.0"
+  }
+}

@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro'
+import PageHero from '../components/PageHero.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { testimonials } from '../data/site'
+
+const [featured, ...rest] = testimonials
+---
+
+<Base
+  title="Testimonials"
+  description="What authors from Nigeria, Ghana, the United Kingdom, the United States, and Canada say about working with Booklith."
+>
+  <PageHero
+    eyebrow="Testimonials"
+    title="In the Words of <em>Our Authors.</em>"
+    intro="Authors from Nigeria, Ghana, the United Kingdom, the United States, and Canada on what it was like to work with Booklith."
+    crumbs={[{ label: 'Testimonials' }]}
+    mark="“"
+  />
+
+  <section class="section section--dark">
+    <div class="wrap">
+      <figure class="feature-quote reveal">
+        <blockquote><p>“{featured.quote}”</p></blockquote>
+        <figcaption>{featured.name} — {featured.country}</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--white">
+    <div class="wrap">
+      <div class="quote-grid">
+        {rest.map((t, i) => (
+          <figure class="quote reveal" data-delay={String(i % 2)}>
+            <blockquote><p>{t.quote}</p></blockquote>
+            <figcaption>{t.name} <span>{t.country}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Your book could be next."
+    text="Tell us about your book and the support you are looking for."
+    secondary={{ label: 'View Our Work', href: '/our-work' }}
+  />
+</Base>

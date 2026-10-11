@@ -1,0 +1,362 @@
+---
+import Base from '../layouts/Base.astro'
+import Img from '../components/Img.astro'
+import VideoPlayer from '../components/VideoPlayer.astro'
+import CtaBand from '../components/CtaBand.astro'
+import { services, stages, projectById, type Media } from '../data/site'
+
+const lions = projectById('lions-of-the-great-rift')
+const whispers = projectById('whispers-of-the-niger-dawn')
+const rainbow = projectById('beyond-the-rainbow-bridge')
+const p5 = projectById('client-project-5')
+const rainbowFilm = rainbow.media.find((m): m is Extract<Media, { type: 'video' }> => m.type === 'video')!
+
+const why = [
+  { t: 'Clear, thoughtful positioning', d: 'We start by clarifying what your book is, who it is for, and how it should be described — before anything is designed or promoted.' },
+  { t: 'Consistent author-brand presentation', d: 'Your profiles, materials, and book communications should feel like they come from the same author. We help make that happen.' },
+  { t: 'Relevant creative campaign materials', d: 'Graphics, launch visuals, and social creatives made for your book and your readers — not generic templates.' },
+  { t: 'Coordinated support across services', d: 'Marketing, branding, creative, publishing support, and outreach are handled by one team, so the pieces fit together.' },
+  { t: 'Practical, author-focused communication', d: 'Straightforward conversations about what you need, what is realistic, and what comes next.' },
+]
+---
+
+<Base>
+  <!-- Hero -->
+  <section class="home-hero">
+    <div class="wrap home-hero__grid">
+      <div class="home-hero__copy">
+        <p class="eyebrow reveal">Book Marketing · Author Branding · Publishing Support</p>
+        <h1 class="display reveal" data-delay="1">Your Book Deserves More Than a Launch. <em>It Deserves a Presence.</em></h1>
+        <p class="lead reveal" data-delay="2">
+          Booklith helps authors build stronger book brands, reach the right readers, and present their work with the
+          professionalism it deserves.
+        </p>
+        <div class="btn-row reveal" data-delay="3">
+          <a class="btn" href="/contact">Let’s Grow Your Book</a>
+          <a class="btn btn--ghost" href="/services">Explore Our Services</a>
+        </div>
+      </div>
+
+      <div class="home-hero__art" aria-label="Selected Booklith work">
+        <figure class="hero-book hero-book--main reveal" data-delay="1">
+          <Img src="/img/work/whispers-cover.jpg" alt={whispers.media[0].alt} width={1005} height={1800} eager sizes="(min-width: 1000px) 30vw, 60vw" widths={[480, 800]} />
+        </figure>
+        <figure class="hero-book hero-book--side reveal" data-delay="2">
+          <Img src="/img/work/lions-cover-art.jpg" alt={lions.media[0].alt} width={1254} height={1254} sizes="(min-width: 1000px) 22vw, 45vw" widths={[480, 800]} />
+        </figure>
+        <p class="hero-art-caption reveal" data-delay="3">
+          <span>Selected work</span>
+          <a href="/our-work">Whispers of the Niger Dawn · Lions of the Great Rift</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction -->
+  <section class="section section--white">
+    <div class="wrap grid-2 grid-2--top">
+      <div>
+        <p class="eyebrow reveal">Who we are</p>
+        <h2 class="h2 reveal" data-delay="1">We Help Authors Build Books People Notice.</h2>
+      </div>
+      <div class="reveal" data-delay="2">
+        <p class="lead" style="color:var(--ink)">
+          Booklith is a book marketing, author branding, publishing support, and creative services company built to help
+          authors move from simply having a book to building a recognizable presence around it.
+        </p>
+        <p class="muted">
+          From positioning and promotional campaigns to author outreach and creative presentation, our team brings
+          strategy, creativity, and practical support together in one place.
+        </p>
+        <p style="margin-top:2rem"><a class="text-link" href="/about">About Booklith <span class="arrow" aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">What we do</p>
+          <h2 class="h2 reveal" data-delay="1">The Support Your Book Needs to Stand Out.</h2>
+        </div>
+        <p class="lead reveal" data-delay="2">
+          Five connected areas of support. Choose one, or bring several together around your book.
+        </p>
+      </div>
+      <div class="service-grid">
+        {
+          services.map((s, i) => (
+            <a class="service-card reveal" data-delay={String(i % 3)} href={s.href}>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="h3">{s.name}</h3>
+              <p>{s.short}</p>
+              <span class="text-link">Learn more <span class="arrow" aria-hidden="true">→</span></span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Booklith -->
+  <section class="section section--dark">
+    <div class="wrap grid-2 grid-2--top">
+      <div class="why-sticky">
+        <p class="eyebrow reveal">Why Booklith</p>
+        <h2 class="h2 reveal" data-delay="1">Thoughtful Strategy. Professional Presentation. <em>Author-Focused Support.</em></h2>
+        <p class="lead reveal" data-delay="2" style="margin-top:1.5rem">
+          We don’t promise bestseller lists. We help you present your book with clarity and care, so the right readers
+          have a better chance of finding it.
+        </p>
+      </div>
+      <ol class="numbered">
+        {why.map((w) => <li class="reveal"><div><h3>{w.t}</h3><p>{w.d}</p></div></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="section section--cream">
+    <div class="wrap grid-2 grid-2--wide-right">
+      <figure class="reveal" style="margin:0">
+        <div class="frame frame--portrait frame--offset">
+          <Img
+            src="/img/team/rapheal-adebayo-home.jpg"
+            alt="Rapheal Adebayo, Founder & Director of Booklith, holding a book beside a desk in a book-lined office"
+            width={1344}
+            height={1800}
+            sizes="(min-width: 900px) 40vw, 100vw"
+            style="object-position:center 20%"
+          />
+        </div>
+      </figure>
+      <div>
+        <p class="eyebrow reveal">Meet the founder</p>
+        <h2 class="h2 reveal" data-delay="1">Rapheal Adebayo</h2>
+        <p class="founder-role reveal" data-delay="1">Founder &amp; Director</p>
+        <p class="lead reveal" data-delay="2">
+          Rapheal leads Booklith with a clear aim: to give authors a dedicated team behind their books — one that brings
+          marketing, branding, creative work, publishing support, and outreach together in a single, coordinated approach.
+        </p>
+        <div class="btn-row reveal" data-delay="3">
+          <a class="text-link" href="/about">Read our story <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="text-link" href="/our-team">Meet the team <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected work -->
+  <section class="section section--white">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">Selected work</p>
+          <h2 class="h2 reveal" data-delay="1">Creative Work With a Purpose.</h2>
+        </div>
+        <div class="reveal" data-delay="2">
+          <p class="lead">Cover artwork, campaign visuals, publishing materials, and author films from five client projects.</p>
+          <p style="margin-top:1.5rem"><a class="text-link" href="/our-work">View all work <span class="arrow" aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+
+      <div class="home-work">
+        <a class="work-card reveal" href={`/our-work#${lions.id}`}>
+          <div class="frame" style="aspect-ratio:1200/896">
+            <Img src="/img/work/lions-campaign-banner.jpg" alt={lions.media[1].alt} width={1200} height={896} sizes="(min-width: 900px) 30vw, 100vw" />
+          </div>
+          <div class="meta"><span>Project 01</span><span>Creative Campaign</span></div>
+          <h3>{lions.title}</h3>
+        </a>
+
+        <div class="work-card work-card--video reveal" data-delay="1">
+          <VideoPlayer src={rainbowFilm.src} poster={rainbowFilm.poster} label={rainbowFilm.label} w={1280} h={720} />
+          <div class="meta"><span>Project 03</span><span>Publishing Support</span></div>
+          <h3><a href={`/our-work#${rainbow.id}`}>{rainbow.title}</a></h3>
+          <p class="muted small">{rainbow.summary}</p>
+        </div>
+
+        <a class="work-card reveal" data-delay="2" href={`/our-work#${p5.id}`}>
+          <div class="frame">
+            <Img src="/img/work/project5-author-portrait.jpg" alt={p5.media[0].alt} width={1344} height={1800} sizes="(min-width: 900px) 30vw, 100vw" />
+          </div>
+          <div class="meta"><span>Project 05</span><span>Author Branding</span></div>
+          <h3>{p5.title}</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="section section--cream">
+    <div class="wrap">
+      <div class="section-head section-head--split">
+        <div>
+          <p class="eyebrow reveal">Our approach</p>
+          <h2 class="h2 reveal" data-delay="1">A Clearer Path to Your Book’s Presence.</h2>
+        </div>
+        <div class="reveal" data-delay="2">
+          <p class="lead">Five stages, shaped around your goals and the services you choose.</p>
+          <p style="margin-top:1.5rem"><a class="text-link" href="/our-approach">See how we work <span class="arrow" aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+      <ol class="stages">
+        {stages.map((s, i) => (
+          <li class="stage reveal" data-delay={String(i % 4)}>
+            <span class="n" aria-hidden="true">{s.n}</span>
+            <h3>{s.name}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style is:global>
+  .home-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 8vw, 7rem) clamp(4rem, 9vw, 7.5rem);
+  }
+  .home-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 38%;
+    background: var(--cream);
+    z-index: -1;
+  }
+  .home-hero__grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 5rem);
+    align-items: center;
+  }
+  @media (min-width: 1000px) {
+    .home-hero__grid {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+  }
+  .home-hero .display {
+    max-width: 15ch;
+  }
+  .home-hero .lead {
+    margin-top: 1.75rem;
+  }
+  .home-hero__art {
+    position: relative;
+    max-width: 520px;
+    width: 100%;
+    margin-inline: auto;
+    padding: 0 0 4.5rem 18%;
+  }
+  .hero-book {
+    margin: 0;
+    background: var(--cream);
+  }
+  .hero-book img {
+    width: 100%;
+    height: auto;
+  }
+  .hero-book--main {
+    box-shadow: 0 40px 80px -40px rgba(18, 17, 16, 0.55), 0 0 0 1px rgba(18, 17, 16, 0.06);
+  }
+  .hero-book--side {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 52%;
+    border: 8px solid var(--ivory);
+    box-shadow: 0 30px 60px -30px rgba(18, 17, 16, 0.5);
+  }
+  .hero-art-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0.5rem;
+    width: 44%;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .hero-art-caption span {
+    display: block;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin-bottom: 0.25rem;
+  }
+  .hero-art-caption a {
+    text-decoration: none;
+  }
+  .hero-art-caption a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-book--main img {
+      animation: hero-drift 14s var(--ease) infinite alternate;
+    }
+  }
+  @keyframes hero-drift {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.035);
+    }
+  }
+  .hero-book--main {
+    overflow: hidden;
+  }
+  @media (max-width: 999px) {
+    .home-hero::before {
+      width: 100%;
+      top: auto;
+      height: 42%;
+    }
+  }
+
+  .founder-role {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin: 0.75rem 0 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .why-sticky {
+      position: sticky;
+      top: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .home-work {
+    display: grid;
+    gap: 2.5rem 2rem;
+  }
+  @media (min-width: 900px) {
+    .home-work {
+      grid-template-columns: 1fr 1.35fr 1fr;
+      align-items: start;
+    }
+    .home-work .work-card--video {
+      margin-top: 4rem;
+    }
+  }
+  .home-work .work-card h3 a {
+    text-decoration: none;
+  }
+  .home-work .work-card h3 a:hover {
+    color: var(--gold-text);
+  }
+</style>
